@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>玖侍倌上线倒计时</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+      background: #7f0006;
+      color: #f7f0df;
+    }
+
+    .page {
+      width: 100%;
+      height: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 40px 40px;
+    }
+
+    .logo-area {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-main {
+      letter-spacing: 0.28em;
+      font-size: 42px;
+      font-weight: 600;
+    }
+
+    .logo-sub {
+      margin-top: 10px;
+      font-size: 16px;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .title-area {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .title-main {
+      font-size: 56px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+    }
+
+    .countdown-wrapper {
+      margin-top: 10px;
+      margin-bottom: 60px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 40px;
+    }
+
+    .time-block {
+      background: rgba(0, 0, 0, 0.26);
+      border-radius: 28px;
+      padding: 26px 20px 22px;
+      min-width: 200px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(255, 232, 200, 0.4);
+    }
+
+    .time-number {
+      font-size: 130px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+    .time-label {
+      font-size: 28px;
+      margin-top: 16px;
+      opacity: 0.95;
+    }
+
+    .brand-logo-bottom {
+      width: 45%;
+      max-width: 480px;
+      margin-bottom: 30px;
+      margin-top: 20px;
+    }
+
+    .brand-logo-bottom img {
+      width: 100%;
+      display: block;
+    }
+
+    .bottom-info {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      opacity: 0.9;
+      line-height: 1.8;
+    }
+
+    .bottom-highlight {
+      font-size: 28px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .divider {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(247, 240, 223, 0.9), transparent);
+      margin: 20px auto 10px;
+      opacity: 0.9;
+    }
+
+    .device-time {
+      margin-top: 8px;
+      font-size: 18px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body onload="startCountdown()">
+  <div class="page">
+    <div class="logo-area">
+      <div class="logo-main">玖侍倌</div>
+      <div class="logo-sub">JIU SHI GUAN</div>
+    </div>
+
+    <div class="title-area">
+      <div id="title-main" class="title-main">距离玖侍倌正式上线</div>
+    </div>
+
+    <div class="countdown-wrapper">
+      <div class="countdown">
+        <div class="time-block">
+          <div id="days" class="time-number">00</div>
+          <div class="time-label">天</div>
+        </div>
+        <div class="time-block">
+          <div id="hours" class="time-number">00</div>
+          <div class="time-label">时</div>
+        </div>
+        <div class="time-block">
+          <div id="minutes" class="time-number">00</div>
+          <div class="time-label">分</div>
+        </div>
+        <div class="time-block">
+          <div id="seconds" class="time-number">00</div>
+          <div class="time-label">秒</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-logo-bottom">
+      <img src="logo.jpg" alt="玖侍倌LOGO" />
+    </div>
+
+    <div class="bottom-info">
+      <div>上线渠道：微信小程序 · 搜索「玖侍倌」</div>
+      <div class="divider"></div>
+      <div class="bottom-highlight">玖侍倌上门，酒桌更欢腾！</div>
+      <div id="device-time" class="device-time"></div>
+    </div>
+  </div>
+
+  <script>
+    function startCountdown() {
+      // 注意：月份从0开始，11=12月
+      var launchTime = new Date(2025, 11, 11, 11, 0, 0).getTime();
+
+      function pad(num) {
+        return num < 10 ? "0" + num : "" + num;
+      }
+
+      function updateCountdown() {
+        var now = new Date().getTime();
+        var diff = launchTime - now;
+
+        var nowDate = new Date();
+        var y = nowDate.getFullYear();
+        var m = nowDate.getMonth() + 1;
+        var d = nowDate.getDate();
+        var hh = nowDate.getHours();
+        var mm = nowDate.getMinutes();
+        var ss = nowDate.getSeconds();
+        var deviceText = "设备当前时间：" +
+          y + "-" + pad(m) + "-" + pad(d) + " " +
+          pad(hh) + ":" + pad(mm) + ":" + pad(ss);
+        var deviceElem = document.getElementById("device-time");
+        if (deviceElem) {
+          deviceElem.innerHTML = deviceText;
+        }
+
+        if (diff <= 0) {
+          document.getElementById("days").textContent = "00";
+          document.getElementById("hours").textContent = "00";
+          document.getElementById("minutes").textContent = "00";
+          document.getElementById("seconds").textContent = "00";
+          document.getElementById("title-main").textContent = "玖侍倌 · 已正式上线";
+          return;
+        }
+
+        var dayMs = 24 * 60 * 60 * 1000;
+        var hourMs = 60 * 60 * 1000;
+        var minuteMs = 60 * 1000;
+        var secondMs = 1000;
+
+        var days = Math.floor(diff / dayMs);
+        diff = diff % dayMs;
+
+        var hours = Math.floor(diff / hourMs);
+        diff = diff % hourMs;
+
+        var minutes = Math.floor(diff / minuteMs);
+        diff = diff % minuteMs;
+
+        var seconds = Math.floor(diff / secondMs);
+
+        document.getElementById("days").textContent = pad(days);
+        document.getElementById("hours").textContent = pad(hours);
+        document.getElementById("minutes").textContent = pad(minutes);
+        document.getElementById("seconds").textContent = pad(seconds);
+
+        setTimeout(updateCountdown, 1000);
+      }
+
+      updateCountdown();
+    }
+  </script>
+</body>
+</html>
